@@ -1,7 +1,18 @@
-from flask import Flask, requests
+from flask import Flask, request
 import openaq
+import requests
+import pandas as pd
+import numpy as np
 APP = Flask(__name__)
-@APP.route('v1/measurements', methods=['GET', 'POST'])
+@APP.route('/')
 def root():
-    print(status)
-    return 'TODO - part 2 and beyond!'
+    PARAMS = {
+    'city': 'Los Angeles',
+    'parameter':'pm25'
+    }
+    URL='https://api.openaq.org/v1/measurements'
+    r = requests.get(url=URL, params=PARAMS)
+    response = r.json()
+    print(f"Meta:{response['meta']}")
+    print(f"results:{len(response['results'])}")
+    return response
